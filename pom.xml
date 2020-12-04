@@ -130,6 +130,10 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
                 <directory>${basedir}</directory>
                 <includes>
                     <include>messages.properties</include>
