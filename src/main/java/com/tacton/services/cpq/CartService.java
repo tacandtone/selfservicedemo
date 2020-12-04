@@ -273,6 +273,7 @@ public class CartService {
 
         //Saving file from response
         InputStream stream = response.getBody().getInputStream();
+
         byte[] buffer = stream.readAllBytes();
         stream.close();
 

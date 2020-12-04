@@ -30,7 +30,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @Configuration
-@PropertySource("file:config.properties")
+@PropertySource("classpath:config.properties")
 public class AppConfig implements WebMvcConfigurer {
 
 
@@ -46,7 +46,7 @@ public class AppConfig implements WebMvcConfigurer {
                 .setCachePeriod(0);
         registry
                 .addResourceHandler("/images/**")
-                .addResourceLocations("file:images/")
+                .addResourceLocations("classpath:images/")
                 .setCachePeriod(0);
 
     }
@@ -56,7 +56,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("file:messages");
+        messageSource.setBasename("classpath:messages");
         return messageSource;
     }
 

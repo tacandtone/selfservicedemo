@@ -21,7 +21,6 @@ package com.tacton;
 import com.tacton.entities.Role;
 import com.tacton.entities.User;
 import com.tacton.entities.UserRole;
-import com.tacton.entities.cpqresponse.CartAttributes;
 import com.tacton.services.RoleService;
 import com.tacton.services.cpq.CartService;
 import com.tacton.services.UserService;
@@ -30,13 +29,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
-public class CustomerSelfServiceFrontendApplication implements CommandLineRunner {
+public class CustomerSelfServiceFrontendApplication extends SpringBootServletInitializer {
 
 
     @Autowired
@@ -76,15 +80,30 @@ public class CustomerSelfServiceFrontendApplication implements CommandLineRunner
     private String defaultCurrency;
 
 
+
     public static void main(String[] args) {
-        SpringApplication.run(CustomerSelfServiceFrontendApplication.class, args);
+        //SpringApplication.run(CustomerSelfServiceFrontendApplication.class, args);
+        configureApplication(new SpringApplicationBuilder()).run(args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        SpringApplicationBuilder springApplicationBuilder = configureApplication(application);
+        return springApplicationBuilder;
     }
 
 
-    @Override
-    public void run(String... args) throws Exception {
+    private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
+        return builder.sources(CustomerSelfServiceFrontendApplication.class);
+    }
 
-        //Populating database on the application startup
+    @Override
+    protected WebApplicationContext run(SpringApplication application) {
+        return super.run(application);
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void createAdminUser() {
 
         Role roleUser = new Role();
         roleUser.setId(1);
@@ -96,33 +115,41 @@ public class CustomerSelfServiceFrontendApplication implements CommandLineRunner
         roleAdmin.setName("ROLE_ADMIN");
         roleService.save(roleAdmin);
 
+        if(userService.findAll().size()==0) {
+            User user1 = new User();
+            user1.setName(adminFirstName);
+            user1.setSurname(adminLastName);
+            user1.setUsername(adminUsername);
+            user1.setPassword(encoder.encode(adminPassword));
+            user1.setEmail(adminEmail);
+            user1.setAccount(defaultAccount);
+            user1.setCountryOfInstallation(defaultCountry);
+            user1.setCurrency(defaultCurrency);
+            user1.setEnabled(true);
 
-        User user1 = new User();
-        user1.setId(Long.valueOf(1));
-        user1.setName(adminFirstName);
-        user1.setSurname(adminLastName);
-        user1.setUsername(adminUsername);
-        user1.setPassword(encoder.encode(adminPassword));
-        user1.setEmail(adminEmail);
-        user1.setAccount(defaultAccount);
-        user1.setCountryOfInstallation(defaultCountry);
-        user1.setCurrency(defaultCurrency);
-        user1.setEnabled(true);
 
+            Set<UserRole> userRoles = new HashSet<>();
+            //userRoles.add(new UserRole(roleService.findByName("ROLE_USER"), user1));
+            userRoles.add(new UserRole(roleService.findByName("ROLE_ADMIN"), user1));
 
-        Set<UserRole> userRoles = new HashSet<>();
-        //userRoles.add(new UserRole(roleService.findByName("ROLE_USER"), user1));
-        userRoles.add(new UserRole(roleService.findByName("ROLE_ADMIN"), user1));
-
-        if(userService.findByUsername(user1.getUsername())!=null){
-            user1.setUserRoles(userService.findByUsername(user1.getUsername()).getUserRoles());
-            userService.save(user1);
+            if (userService.findByUsername(user1.getUsername()) != null) {
+                user1.setUserRoles(userService.findByUsername(user1.getUsername()).getUserRoles());
+                userService.save(user1);
+            } else {
+                user1.setUserRoles(userRoles);
+                userService.createUser(user1, userRoles);
+            }
         }
         else{
-            user1.setUserRoles(userRoles);
-            userService.createUser(user1, userRoles);
+            User admin = userService.findByUsername(adminUsername);
+            if(admin!=null){
+                admin.setPassword(encoder.encode(adminPassword));
+                admin.setAccount(defaultAccount);
+                admin.setCountryOfInstallation(defaultCountry);
+                admin.setCurrency(defaultCurrency);
+                userService.save(admin);
+            }
         }
-
 
     }
 }

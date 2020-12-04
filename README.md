@@ -62,3 +62,16 @@ To start LeadGen enter the URL in the browser: http://your_server/leadgen.html
 If your project only needs to communicate with the Customer Self service API, you can easily exclude the LeadGen part. To do so, simply remove link to LeadGen from main landing page. Just edit the 
 "src/main/resources/templates/index.html" file and remove the button with link: "/configure". 
 You can also tailor the page to your needs.
+
+## To set up this application
+###Prerequisites:
+- Register for an account at https://heroku.com 
+####Install following packages: 
+- Java SDK 11 (https://docs.oracle.com/en/java/javase/11/install/installation-jdk-microsoft-windows-platforms.html#GUID-A7E27B90-A28D-4237-9383-A58B416071CA)
+- Maven (https://maven.apache.org/install.html)
+- Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli) 
+
+####The initial setup
+- Clone the git repository to you local disk
+- Ensure that the prerequisite packages have been installed
+- Run the SetUpHeroku.bat (one time script) and follow the instructions

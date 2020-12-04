@@ -13,9 +13,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>customer-self-service</name>
     <description>Demo project</description>
-
+    <packaging>war</packaging>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
@@ -40,11 +40,18 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-<!--        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.8</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
@@ -99,16 +106,36 @@
             <version>1.6</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+        </dependency>-->
 
 
     </dependencies>
 
     <build>
-
+        <resources>
+            <resource>
+                 <filtering>false</filtering>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>config.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>${basedir}/images</directory>
+                <targetPath>/images</targetPath>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>messages.properties</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -119,11 +146,18 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>2.0.16</version>
+                <configuration>
+                    <appName>YOUR_NAME_OF_HEROKU_APP</appName>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
