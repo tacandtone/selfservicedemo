@@ -117,24 +117,24 @@
     <build>
         <resources>
             <resource>
-                 <filtering>false</filtering>
-                <directory>${basedir}</directory>
+                <filtering>false</filtering>
+                <directory>file://${basedir}</directory>
                 <includes>
                     <include>config.properties</include>
                 </includes>
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>${basedir}/images</directory>
+                <directory>file://${basedir}/images</directory>
                 <targetPath>/images</targetPath>
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>${basedir}/src/main/resources</directory>
+                <directory>file://${basedir}/src/main/resources</directory>
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>${basedir}</directory>
+                <directory>file://${basedir}</directory>
                 <includes>
                     <include>messages.properties</include>
                 </includes>
