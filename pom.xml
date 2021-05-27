@@ -159,6 +159,11 @@
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>2.0.16</version>
                 <configuration>
+                    <buildpacks>
+                        <buildpack>heroku/exec</buildpack>
+                        <buildpack>heroku/metrics</buildpack>
+                        <buildpack>heroku/jvm</buildpack>
+                    </buildpacks>
                     <appName>YOUR_NAME_OF_HEROKU_APP</appName>
                 </configuration>
             </plugin>
