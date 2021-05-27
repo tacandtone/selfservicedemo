@@ -118,25 +118,36 @@
         <resources>
             <resource>
                 <filtering>false</filtering>
-                <directory>file://${basedir}</directory>
+                <directory>./</directory>
                 <includes>
                     <include>config.properties</include>
                 </includes>
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>file://${basedir}/images</directory>
-                <targetPath>/images</targetPath>
+                <directory>images</directory>
+                <targetPath>images</targetPath>
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>file://${basedir}/src/main/resources</directory>
+                <directory>src/main/resources</directory>
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>file://${basedir}</directory>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>./</directory>
                 <includes>
                     <include>messages.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>./</directory>
+                <includes>
+                    <include>system.properties</include>
                 </includes>
             </resource>
         </resources>
@@ -160,8 +171,6 @@
                 <version>2.0.16</version>
                 <configuration>
                     <buildpacks>
-                        <buildpack>heroku/exec</buildpack>
-                        <buildpack>heroku/metrics</buildpack>
                         <buildpack>heroku/jvm</buildpack>
                     </buildpacks>
                     <appName>YOUR_NAME_OF_HEROKU_APP</appName>
