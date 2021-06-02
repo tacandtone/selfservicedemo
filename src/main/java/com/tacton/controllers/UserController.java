@@ -89,6 +89,8 @@ public class UserController {
     @Value("${css_default_currency}")
     private String css_default_currency;
 
+    @Value("${auto_approve_users}")
+    private String auto_approve_users;
 
 
 
@@ -246,6 +248,10 @@ public class UserController {
         userRoles.add(new UserRole(roleService.findByName("ROLE_USER"), user));
 
         user.setPassword(encoder.encode(user.getPassword()));
+
+        if("true".equals(auto_approve_users)) {
+            user.setEnabled(true);
+        }
 
         userService.createUser(user, userRoles);
 
