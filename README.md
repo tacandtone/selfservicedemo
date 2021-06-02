@@ -69,9 +69,13 @@ You can also tailor the page to your needs.
 ####Install following packages: 
 - Java SDK 11 (https://docs.oracle.com/en/java/javase/11/install/installation-jdk-microsoft-windows-platforms.html#GUID-A7E27B90-A28D-4237-9383-A58B416071CA)
 - Maven (https://maven.apache.org/install.html)
-- Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli) 
+- Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli)
+- Git (https://git-scm.com/)
 
 ####The initial setup
 - Clone the git repository to you local disk
 - Ensure that the prerequisite packages have been installed
-- Run the SetUpHeroku.bat (one time script) and follow the instructions
+- Two paths from here:
+    - Run the SetUpHeroku_wardeploy.bat (one time script) and follow the instructions (Build the project on your computer)
+    - (Preferred) Run the SetUpHeroku_gitdeploy.bat (SetUpHeroku_gitdeploy.sh if you're on a mac) and follow the instructions (Build the project in heroku)
+    
