@@ -871,8 +871,11 @@ var $ = jQuery;
 			function addItem(bomItem) {
 				const a = LG.bomColumns[0].articleNumber;
 				const p = LG.bomColumns[0].price;
+				const descriptionAttributeName = LG.bomColumns[0].description;
+				const qtyAttributeName = LG.bomColumns[0].qty;
 				const artNo = bomItem[a] == undefined ? "" : bomItem[a];
 				const price = bomItem[p] == undefined ? "0" : bomItem[p];
+
 				
 				const extraInfo = LG.bomExtraInfo;
 				
@@ -904,7 +907,7 @@ var $ = jQuery;
 					return `<li class="item-header">
 								<div class="bom-row">
 									<div class="col">
-										<strong>${bomItem.summary.descriptionColumn}</strong>
+										<strong>${bomItem.summary[descriptionAttributeName]}</strong>
 									</div>
 								</div>
 								<ul>
@@ -918,7 +921,7 @@ var $ = jQuery;
 				return `<li>
 						<div class="bom-row">
 							<div class="col-name">
-								<span>${bomItem.descriptionColumn}</span>
+								<span>${bomItem[descriptionAttributeName]}</span>
 								<a class="show-details"><span class="icon icon-chevron-down"></span></a>
 							</div>
 							<div class="col-id ${subItemClass}"><span title=${artNo}>${artNo}</span></div>
@@ -932,7 +935,7 @@ var $ = jQuery;
 										<p>${longDescription}</p>
 									</div>
 									<table>
-									<tr><td class="name">Qty</td><td class="desc">${bomItem.qtyColumn}</td></tr>
+									<tr><td class="name">Qty</td><td class="desc">${bomItem[qtyAttributeName]}</td></tr>
 										${extraInfo.map(item => `<tr><td class="name">${item.name}</td><td class="desc">${bomItem[item.key]}</td></tr>`).join('')}
 									</table>
 								</div>
@@ -1386,6 +1389,7 @@ $(document).ready(function () {
 	LG._externalId = p.externalId;
 	LG.qty = p.qty;
 	LG.referer = c.referer;
+	LG.TotalPriceColumn = c.TotalPriceColumn;
 
 	console.log(LG.referer);
 

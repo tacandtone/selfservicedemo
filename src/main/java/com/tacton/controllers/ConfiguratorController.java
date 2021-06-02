@@ -114,6 +114,9 @@ public class ConfiguratorController {
     @Value("${leadgen_needs_params}")
     private String leadgen_needs_params;
 
+    @Value("${total_price_column}")
+    private String total_price_column;
+
     private final Logger LOGGER = LoggerFactory.getLogger(ConfiguratorController.class);
 
     //
@@ -148,6 +151,7 @@ public class ConfiguratorController {
         model.addAttribute("bom_show_prices", css_bom_show_prices);
         model.addAttribute("needs_params", needsParam.prepareCartNeedsParams(css_needs_params, cart));
         model.addAttribute("cpq_instance_url", cpq_instance_url);
+        model.addAttribute("total_price_column", total_price_column);
 
         return "configurator";
     }
@@ -191,6 +195,7 @@ public class ConfiguratorController {
         model.addAttribute("bom_show_prices", css_bom_show_prices);
         model.addAttribute("needs_params", needsParam.prepareCartNeedsParams(css_needs_params, cart));
         model.addAttribute("cpq_instance_url", cpq_instance_url);
+        model.addAttribute("total_price_column", total_price_column);
 
         return "configurator";
     }
@@ -214,6 +219,7 @@ public class ConfiguratorController {
         model.addAttribute("bom_show_prices", leadgen_bom_show_prices);
         model.addAttribute("needs_params", needsParam.prepareLeadGenNeedsParams(leadgen_needs_params, () -> ""));
         model.addAttribute("cpq_instance_url", cpq_instance_url);
+        model.addAttribute("total_price_column", total_price_column);
 
         return "configuratorLeadgen";
     }
@@ -235,6 +241,7 @@ public class ConfiguratorController {
         model.addAttribute("bom_show_prices", leadgen_bom_show_prices);
         model.addAttribute("needs_params", needsParam.prepareLeadGenNeedsParams(leadgen_needs_params, () -> param));
         model.addAttribute("cpq_instance_url", cpq_instance_url);
+        model.addAttribute("total_price_column", total_price_column);
 
         return "configuratorLeadgen";
     }

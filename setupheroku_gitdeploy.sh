@@ -92,7 +92,7 @@ heroku config:set -a "$application" \
  spring.datasource.username="$dbuser" \
  auto_approve_users="false" \
  css_price_summary_attribute="ListPrice" \
- css_bom_columns="[{\"articleNumber\": \"itemNumberColumn\",\"description\": \"Description\", \"price\": \"ListPrice\"}]" \
+ css_bom_columns="[{\"articleNumber\": \"Variant\",\"description\": \"Description\", \"price\": \"ListPrice\"},\"qty\": \"Qty\"}]" \
  css_bom_extra_info="[{\"name\":\"Article no\", \"key\": \"itemNumberColumn\"}]"
 
 
